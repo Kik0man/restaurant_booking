@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Бронирование подтверждено{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="alert alert-success text-center shadow-lg">
+        <i class="bi bi-check-circle-fill fs-1"></i>
+        <h2>Ваш столик забронирован!</h2>
+        <p>Скоро наш менеджер свяжется с вами для подтверждения.</p>
+        <a href="{% url 'accounts:profile' %}" class="btn btn-primary mt-3">Перейти в личный кабинет</a>
+    </div>
+</div>
+{% endblock %}
