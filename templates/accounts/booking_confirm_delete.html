@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Отмена бронирования{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4><i class="bi bi-exclamation-triangle"></i> Подтверждение отмены</h4>
+                </div>
+                <div class="card-body">
+                    <p>Вы действительно хотите отменить бронирование на <strong>{{ object.date|date:"d.m.Y" }} в {{ object.time|time:"H:i" }}</strong>?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Да, отменить</button>
+                        <a href="{% url 'accounts:profile' %}" class="btn btn-secondary">Нет, вернуться</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

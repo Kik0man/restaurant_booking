@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная - Ресторан "Вкус жизни"{% endblock %}
+
+{% block content %}
+<!-- Hero секция -->
+<div class="hero text-center">
+    <div class="container">
+        <h1>Добро пожаловать в "Вкус жизни"</h1>
+        <p class="lead">Изысканная кухня, уютная атмосфера и лучший сервис в городе</p>
+        <a href="{% url 'bookings:booking' %}" class="btn btn-primary btn-lg mt-3">
+            <i class="bi bi-calendar-plus"></i> Забронировать столик
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- О ресторане (из контента или заглушка) -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="mb-3">О нашем ресторане</h2>
+            <p class="lead">{{ about_text.content|default:"Мы создаём для вас незабываемые вечера. Авторская кухня, винтажный интерьер и профессионализм команды."|safe }}</p>
+        </div>
+    </div>
+
+    <!-- Услуги карточками -->
+    <h2 class="text-center mb-4">Наши услуги</h2>
+    <div class="row">
+        {% if services %}
+            {% for service in services %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 text-center">
+                    <img src="https://via.placeholder.com/400x200?text=Услуга" class="card-img-top" alt="{{ service.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.title }}</h5>
+                        <p class="card-text">{{ service.content|safe|truncatechars:100 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="bi bi-gem fs-1 text-primary"></i>
+                        <h5 class="card-title">Банкеты</h5>
+                        <p class="card-text">Организуем праздники любого масштаба.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="bi bi-truck fs-1 text-primary"></i>
+                        <h5 class="card-title">Доставка</h5>
+                        <p class="card-text">Блюда из нашего меню с доставкой на дом.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="bi bi-wine fs-1 text-primary"></i>
+                        <h5 class="card-title">Винная карта</h5>
+                        <p class="card-text">Коллекция вин со всего мира.</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Контакты и форма обратной связи -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3><i class="bi bi-pin-map-fill"></i> Как нас найти</h3>
+            <p>{{ contacts.content|default:"Москва, Тверская 15. Метро Пушкинская, выход к ресторану."|safe }}</p>
+            <div class="ratio ratio-16x9 mb-3">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.606872466497!2d37.60567931593022!3d55.75789498055343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a2b3b7f6a6b%3A0x5b7e1b6e9c7a7d9!2z0JDRgNC40L3QsNC0!5e0!3m2!1sru!2sru!4v1620000000000!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="bi bi-chat-dots"></i> Обратная связь</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Имя</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                {{ contact_form.name }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                {{ contact_form.email }}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Сообщение</label>
+                            {{ contact_form.message }}
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-send"></i> Отправить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
